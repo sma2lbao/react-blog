@@ -1,0 +1,8 @@
+@charset "UTF-8";
+html,body{height: 100%;}
+
+.loginWrap{height: 100%;width: 100%;background-color: #29324a;}
+.loginComt{width: 560px;background-color: #fff;position: fixed;top: 0;bottom: 0;right: 0;left: 0;margin: auto;height: 410px;border-radius: 5px;text-align: center;color: #29324a;}
+.title{height: 64px;line-height: 64px;border-bottom: 1px solid #e3ebef;font-size: 18px;margin: 0;}
+.keyWrap{text-align: left;margin-bottom: 10px;}
+.itemWrap{padding: 30px 135px;}
