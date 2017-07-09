@@ -1,9 +1,10 @@
 import {combineReducers} from 'redux'
-import {GET_USER, GET_PASSWORD, LOGIN} from '../action'
+import {GET_USER, GET_PASSWORD, LOGIN, LOGIN_ASYNC} from '../action'
 
 const login = (state = false, action) => {
   switch (action.type) {
     case LOGIN:
+      console.log('join');
       if("sma2lbao" === action.user && "000000" === action.password)
       {
         return true
@@ -11,6 +12,9 @@ const login = (state = false, action) => {
       else {
         return false
       }
+    // case LOGIN_ASYNC:
+    //   console.log('');
+    //   return true
     default:
       return state
   }

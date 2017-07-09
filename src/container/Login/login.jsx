@@ -7,7 +7,7 @@ import cns from 'classnames/bind'
 import fa from 'font-awesome/css/font-awesome.css'
 
 import {connect} from 'react-redux'
-import {getUser, getPassword, login} from '../../redux/action'
+import {getUser, getPassword, login, loginAsync} from '../../redux/action'
 let cx = cns.bind(styles)
 
 
@@ -25,7 +25,7 @@ class Login extends Component {
   }
 
   render() {
-    const { user, password, onClick, statu, changeUser, changePassword} = this.props
+    const { user, password, onClick, statu, changeUser, changePassword, onClickAsync} = this.props
     return(
       <div className={styles.loginWrap}>
         <div className={styles.loginComt}>
@@ -35,7 +35,7 @@ class Login extends Component {
             <GBinput value={user} onChange={(value) => changeUser(value)} />
             <div style={{marginTop: '30px'}} className={styles.keyWrap}><span>密&nbsp;&nbsp;&nbsp;&nbsp;码：</span></div>
             <GBinput type="password" value={password} onChange={(value) => changePassword(value)} />
-            <GBbutton text="登  录"  style={{fontSize: "18px", marginTop: "40px"}} onClick={() => onClick(user, password)} />
+            <GBbutton text="登  录"  style={{fontSize: "18px", marginTop: "40px"}} onClick={() => onClickAsync(user)} />
 
           </div>
         </div>
@@ -62,6 +62,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     changePassword: (value) => {
       dispatch(getPassword(value))
+    },
+    onClickAsync: (data) => {
+      dispatch(loginAsync(data))
     }
   }
 }
