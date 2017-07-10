@@ -1,38 +1,20 @@
-import {combineReducers} from 'redux'
-import {GET_USER, GET_PASSWORD, LOGIN, LOGIN_ASYNC} from '../action'
+import { combineReducers } from 'redux'
 
-const login = (state = false, action) => {
-  switch (action.type) {
-    case LOGIN:
-      console.log('join');
-      if("sma2lbao" === action.user && "000000" === action.password)
-      {
-        return true
-      }
-      else {
-        return false
-      }
-    // case LOGIN_ASYNC:
-    //   console.log('');
-    //   return true
-    default:
-      return state
-  }
-}
+import {LOGIN_USER, LOGIN_PASS} from '../../redux/action/index.js'
 
-const inputInfo = (state = {}, action) => {
+const loginInfo = (state = {user: '', pass: ''}, action) => {
   switch (action.type) {
-    case GET_USER:
+    case LOGIN_USER:
       return Object.assign({}, state, {user: action.user})
-    case GET_PASSWORD:
-      return Object.assign({}, state, {password: action.password})
+    case LOGIN_PASS:
+      return Object.assign({}, state, {pass: action.pass})
     default:
       return state
   }
 }
 
-const loginReducer = combineReducers({
-  login,
-  inputInfo
+ const reducers = combineReducers({
+  loginInfo,
 })
-export default loginReducer
+
+export default reducers

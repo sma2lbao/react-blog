@@ -5,11 +5,10 @@ import GBbutton from '../../component/button/GB-button.jsx'
 import styles from './login.css'
 import cns from 'classnames/bind'
 import fa from 'font-awesome/css/font-awesome.css'
-
 import {connect} from 'react-redux'
-import {getUser, getPassword, login, loginAsync} from '../../redux/action'
-let cx = cns.bind(styles)
+import {setLoginUser, setLoginPass} from '../../redux/action/index.js'
 
+let cx = cns.bind(styles)
 
 
 class Login extends Component {
@@ -17,7 +16,11 @@ class Login extends Component {
 
   }
   static propTypes = {
-
+    user: PropTypes.string.isRequired,
+    pass: PropTypes.string.isRequired,
+    setLoginUser: PropTypes.func.isRequired,
+    setLoginPass: PropTypes.func.isRequired,
+    loginAsync: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -25,18 +28,17 @@ class Login extends Component {
   }
 
   render() {
-    const { user, password, onClick, statu, changeUser, changePassword, onClickAsync} = this.props
+    const {user, pass, setLoginUser, setLoginPass, loginAsync} = this.props
     return(
       <div className={styles.loginWrap}>
         <div className={styles.loginComt}>
           <h5 className={styles.title}>输入登录信息</h5>
           <div className={styles.itemWrap}>
             <div className={styles.keyWrap}><span>用户名：</span></div>
-            <GBinput value={user} onChange={(value) => changeUser(value)} />
+            <GBinput value={user} onChange={(value) => {setLoginUser(value)}} />
             <div style={{marginTop: '30px'}} className={styles.keyWrap}><span>密&nbsp;&nbsp;&nbsp;&nbsp;码：</span></div>
-            <GBinput type="password" value={password} onChange={(value) => changePassword(value)} />
-            <GBbutton text="登  录"  style={{fontSize: "18px", marginTop: "40px"}} onClick={() => onClickAsync(user)} />
-
+            <GBinput value={pass} type="password" onChange={(value) => {setLoginPass(value)}} />
+            <GBbutton text="登  录"  style={{fontSize: "18px", marginTop: "40px"}} onClick={() => {loginAsync(user, pass)}} />
           </div>
         </div>
       </div>
@@ -46,26 +48,16 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.inputInfo.user,
-    password: state.inputInfo.password,
-    statu: state.login,
+    user: state.loginInfo.user,
+    pass: state.loginInfo.pass,
   }
 }
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    onClick: (user, password) => {
-      // dispatch(login('sma2lbao', '000000'))
-      dispatch(login(user, password))
-    },
-    changeUser: (value) => {
-      dispatch(getUser(value))
-    },
-    changePassword: (value) => {
-      dispatch(getPassword(value))
-    },
-    onClickAsync: (data) => {
-      dispatch(loginAsync(data))
-    }
+    setLoginUser: (user) => dispatch(setLoginUser(user)),
+    setLoginPass: (pass) => dispatch(setLoginPass(pass)),
+    loginAsync: (user, pass) => dispatch({type: 'LOGIN_ASYNC'})
   }
 }
 
