@@ -2,11 +2,12 @@ import React, { Component, PropTypes } from 'react'
 // import GBpop from '../../component/pop/GB-pop.jsx'
 import GBinput from '../../component/input-text/GB-Input-text.jsx'
 import GBbutton from '../../component/button/GB-button.jsx'
+import GBrefresh from '../../component/refresh/GB-refresh.jsx'
 import styles from './login.css'
 import cns from 'classnames/bind'
 import fa from 'font-awesome/css/font-awesome.css'
 import {connect} from 'react-redux'
-import {setLoginUser, setLoginPass} from '../../redux/action/index.js'
+import {setLoginUser, setLoginPass,} from '../../redux/action/index.js'
 
 let cx = cns.bind(styles)
 
@@ -21,6 +22,9 @@ class Login extends Component {
     setLoginUser: PropTypes.func.isRequired,
     setLoginPass: PropTypes.func.isRequired,
     loginAsync: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    msg: PropTypes.string.isRequired,
+    error: PropTypes.string.isRequired,
   }
 
   constructor(props) {
@@ -28,7 +32,7 @@ class Login extends Component {
   }
 
   render() {
-    const {user, pass, setLoginUser, setLoginPass, loginAsync} = this.props
+    const {user, pass, setLoginUser, setLoginPass, loginAsync, isLoading} = this.props
     return(
       <div className={styles.loginWrap}>
         <div className={styles.loginComt}>
@@ -41,6 +45,9 @@ class Login extends Component {
             <GBbutton text="登  录"  style={{fontSize: "18px", marginTop: "40px"}} onClick={() => {loginAsync(user, pass)}} />
           </div>
         </div>
+        <div>
+          <GBrefresh playing={isLoading} />
+        </div>
       </div>
     )
   }
@@ -50,6 +57,9 @@ const mapStateToProps = (state) => {
   return {
     user: state.loginInfo.user,
     pass: state.loginInfo.pass,
+    isLoading: state.loginStatu.isLoading,
+    msg: state.loginStatu.msg,
+    error: state.loginStatu.error,
   }
 }
 
