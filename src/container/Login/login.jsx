@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react'
-// import GBpop from '../../component/pop/GB-pop.jsx'
+import ReactTransitionGroup from 'react-addons-css-transition-group'
 import GBinput from '../../component/input-text/GB-Input-text.jsx'
 import GBbutton from '../../component/button/GB-button.jsx'
 import GBrefresh from '../../component/refresh/GB-refresh.jsx'
+import GBmsg from '../../component/msg/GB-msg.jsx'
 import styles from './login.css'
 import cns from 'classnames/bind'
 import fa from 'font-awesome/css/font-awesome.css'
@@ -32,7 +33,7 @@ class Login extends Component {
   }
 
   render() {
-    const {user, pass, setLoginUser, setLoginPass, loginAsync, isLoading} = this.props
+    const {user, pass, setLoginUser, setLoginPass, loginAsync, isLoading, msg, error} = this.props
     return(
       <div className={styles.loginWrap}>
         <div className={styles.loginComt}>
@@ -45,8 +46,19 @@ class Login extends Component {
             <GBbutton text="登  录"  style={{fontSize: "18px", marginTop: "40px"}} onClick={() => {loginAsync(user, pass)}} />
           </div>
         </div>
+        <div  className={cx(styles.refreshWrap, {hidden: !isLoading})}>
+          <div className={styles.refreshBg}></div>
+          <div className={styles.refreshPos}>
+            <GBrefresh playing={isLoading} />
+          </div>
+        </div>
         <div>
-          <GBrefresh playing={isLoading} />
+          <div className={cx({hidden: !msg})}>
+            <GBmsg type="alert" title="登录信息"  text={msg} />
+          </div>
+          <div className={cx({hidden: !error})}>
+            <GBmsg type="alert" title="登录信息"  text={error}  />
+          </div>
         </div>
       </div>
     )

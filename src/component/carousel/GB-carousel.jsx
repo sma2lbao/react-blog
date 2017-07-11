@@ -128,7 +128,7 @@ export default class GB_carousel extends Component {
         <div className={styles.imgNav}>
           {imgs.map((value, index) => {
             return(
-              <span className={cx(styles.imgNavItem, {hidden: index != showImg})}></span>
+              <span key={index} className={cx(styles.imgNavItem, {hidden: index != showImg})}></span>
             )
           })}
         </div>
