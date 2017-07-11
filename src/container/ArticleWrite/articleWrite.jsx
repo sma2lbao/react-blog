@@ -4,8 +4,10 @@ import cns from 'classnames/bind'
 import GBheader from '../../component/header/GB-header.jsx'
 import GBRicheditor from '../../component/rich-editor/GB-Rich-editor.jsx'
 import GBbutton from '../../component/button/GB-button.jsx'
+import GBrefresh from '../../component/refresh/GB-refresh.jsx'
+import GBpop from '../../component/pop/GB-pop.jsx'
 import {connect} from 'react-redux'
-import { setHeadactive, setArticleTitle, setArticleComt } from '../../redux/action/index.js'
+import { setHeadactive, setArticleTitle, setArticleComt, postArticleSuccess, postArticleFailure } from '../../redux/action/index.js'
 
 let cx = cns.bind(styles)
 
@@ -15,6 +17,8 @@ class Article_writer extends Component {
     headLst: PropTypes.array.isRequired,
     headActive: PropTypes.number.isRequired,
     setHeadIndex: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+
   }
   constructor(props) {
     super(props)
@@ -23,8 +27,11 @@ class Article_writer extends Component {
   handleClick() {
     this.props.writeArticle()
   }
+  clearInfo() {
+    this.props.clearInfo()
+  }
   render() {
-    const { headLst, headActive, setHeadIndex, setTitle, setComt } = this.props
+    const { headLst, headActive, setHeadIndex, setTitle, setComt, isLoading, msg, error} = this.props
     return (
       <div className={cx(styles.detailWrap)}>
         <GBheader active={headActive} propList={headLst} itemClick={(value, index) => setHeadIndex(index)} />
@@ -39,6 +46,25 @@ class Article_writer extends Component {
             </div>
           </div>
         </div>
+        <div  className={cx(styles.refreshWrap, {hidden: !isLoading})}>
+          <div className={styles.refreshBg}></div>
+          <div className={styles.refreshPos}>
+            <GBrefresh playing={isLoading} />
+          </div>
+        </div>
+        <div>
+          <GBpop title="上传信息" statu={msg || error ? true : false}>
+            <div>
+              {msg}
+            </div>
+            <div>
+              {error}
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <GBbutton text="确定" onClick={this.clearInfo.bind(this)} />
+            </div>
+          </GBpop>
+        </div>
       </div>
     )
   }
@@ -48,6 +74,9 @@ const mapStateToProps = (state) => {
   return {
     headLst: state.headList,
     headActive: state.headActive,
+    isLoading: state.postArticle.isLoading,
+    msg: state.postArticle.msg,
+    error: state.postArticle.error,
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -56,7 +85,11 @@ const mapDispatchToProps = (dispatch) => {
     setHeadIndex: (index) => {dispatch(setHeadactive(index))},
     setTitle: (title) => {dispatch(setArticleTitle(title))},
     setComt: (article) => {dispatch(setArticleComt(article))},
-    writeArticle: () => {dispatch({type: 'POST_ARTICLE'})}
+    writeArticle: () => {dispatch({type: 'POST_ARTICLE'})},
+    clearInfo: () => {
+      dispatch(postArticleSuccess(''))
+      dispatch(postArticleFailure(''))
+    }
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Article_writer)

@@ -1,6 +1,6 @@
 import {delay} from 'redux-saga'
 import {takeEvery, put, call, all, select} from 'redux-saga/effects'
-import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, HEAD_LIST,loginRequest, loginFailure, loginSuccess, } from '../redux/action/index.js'
+import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, HEAD_LIST,loginRequest, loginFailure, loginSuccess, POST_ARTICLE_REQUEST, POST_ARTICLE_SUCCESS, POST_ARTICLE_FAILURE} from '../redux/action/index.js'
 import axios from 'axios'
 axios.defaults.baseURL = 'http://localhost:9498/api/blog/';
 
@@ -9,7 +9,7 @@ export function* loginAsync () {
   yield call(delay, 1000)
   const {loginInfo} = yield select()
   try{
-    const json = yield call(axios, {type: 'GET', url: 'user', params: {user: loginInfo.user, pass: loginInfo.pass}})
+    const json = yield call(axios, {method: 'GET', url: 'user', params: {user: loginInfo.user, pass: loginInfo.pass}})
     if(json.data.msg){
       yield put({type: LOGIN_REQUEST, loading: false})
       yield put({type: LOGIN_SUCCESS, text: json.data.msg})
@@ -36,7 +36,7 @@ export function* watchLoginAsync() {
 
 export function* getHeadlist() {
   try{
-    const json = yield call(axios, {type: 'GET', url: 'heads'})
+    const json = yield call(axios, {method: 'GET', url: 'heads'})
     yield put({type: HEAD_LIST, list: json.data.data})
   } catch(error) {
     yield put({type: HEAD_LIST, list: []})
@@ -48,8 +48,22 @@ export function* watchGetHeadList() {
 }
 
 export function* postArticle(title, article) {
-  console.log('join');
-  
+  try{
+    yield put({type: POST_ARTICLE_REQUEST, loading: true})
+    const {article, headActive} = yield select()
+    const json = yield call(axios, {method: 'POST', url: 'article', data: {title: article.title, comt: article.comt, index: headActive}})
+    yield call(delay, 1000)
+    yield put({type: POST_ARTICLE_REQUEST, loading: false})
+    if(json.data.msg) {
+      yield put({type: POST_ARTICLE_SUCCESS, msg: json.data.msg})
+    }
+    else {
+      yield put({type: POST_ARTICLE_FAILURE, error: json.data.error})
+    }
+  } catch(error) {
+    yield put({type: POST_ARTICLE_REQUEST, loading: false})
+    yield put({type: POST_ARTICLE_FAILURE, error: error.toString()})
+  }
 }
 
 export function* watchPostArticle() {

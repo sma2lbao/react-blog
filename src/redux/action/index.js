@@ -7,6 +7,9 @@ export const HEAD_LIST = 'HEAD_LIST'
 export const HEAD_ACTIVE = 'HEAD_ACTIVE'
 export const ARTICLE_TITLE = 'ARTICLE_TITLE'
 export const ARTICLE_COMT = 'ARTICLE_COMT'
+export const POST_ARTICLE_REQUEST = 'POST_ARTICLE_REQUEST'
+export const POST_ARTICLE_SUCCESS = 'POST_ARTICLE_SUCCESS'
+export const POST_ARTICLE_FAILURE = 'POST_ARTICLE_FAILURE'
 
 export const setLoginUser = (user) => {
   return {
@@ -60,5 +63,23 @@ export const setArticleComt = (comt) => {
   return {
     type: ARTICLE_COMT,
     comt
+  }
+}
+export const postArticleRequest = (loading) => {
+  return {
+    type: POST_ARTICLE_REQUEST,
+    loading
+  }
+}
+export const postArticleSuccess = (msg) => {
+  return {
+    type: POST_ARTICLE_SUCCESS,
+    msg
+  }
+}
+export const postArticleFailure = (error) => {
+  return{
+    type: POST_ARTICLE_FAILURE,
+    error
   }
 }

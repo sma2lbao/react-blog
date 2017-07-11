@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import {LOGIN_USER, LOGIN_PASS, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, HEAD_LIST, HEAD_ACTIVE, ARTICLE_TITLE, ARTICLE_COMT} from '../../redux/action/index.js'
+import {LOGIN_USER, LOGIN_PASS, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, HEAD_LIST, HEAD_ACTIVE, ARTICLE_TITLE, ARTICLE_COMT, POST_ARTICLE_REQUEST, POST_ARTICLE_SUCCESS, POST_ARTICLE_FAILURE} from '../../redux/action/index.js'
 
 const loginInfo = (state = {user: '', pass: ''}, action) => {
   switch (action.type) {
@@ -52,12 +52,26 @@ const article = (state = {title: '', comt: ''}, action) => {
   }
 }
 
+const postArticle = (state = {isLoading: false, msg: '', error: ''}, action) => {
+  switch (action.type) {
+    case POST_ARTICLE_REQUEST:
+      return Object.assign({}, state, { isLoading: action.loading })
+    case POST_ARTICLE_SUCCESS:
+      return Object.assign({}, state, {msg: action.msg})
+    case POST_ARTICLE_FAILURE:
+      return Object.assign({}, state, {error: action.error})
+    default:
+      return state
+  }
+}
+
 const reducers = combineReducers({
   loginInfo,
   loginStatu,
   headList,
   headActive,
   article,
+  postArticle
 })
 
 export default reducers
