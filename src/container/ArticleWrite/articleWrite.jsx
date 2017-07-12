@@ -18,7 +18,6 @@ class Article_writer extends Component {
     headActive: PropTypes.number.isRequired,
     setHeadIndex: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
-
   }
   constructor(props) {
     super(props)

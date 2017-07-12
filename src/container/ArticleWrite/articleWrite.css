@@ -1,6 +1,6 @@
 @charset "UTF-8";
-.detailWrap{min-height: calc(100% - 20px);padding-bottom: 20px;background-color: #f5f8fa;}
-.wrap{width: 960px;background-color: #fff;margin: 0 auto;box-shadow: 5px 5px 20px #888;min-height: calc(100% - 86px);}
+.detailWrap{min-height: 100%;padding-bottom: 20px;background-color: #f5f8fa;box-sizing: border-box;position: relative;}
+.wrap{width: 960px;background-color: #fff;box-shadow: 5px 5px 20px #888;min-height: calc(100% - 106px);position: absolute;left: 50%;margin-left: -480px;top: 86px;}
 .article{padding: 30px 100px;}
 .article h1{font-size: 38px;font-weight: 600;color: #29324a;text-align: center;}
 .article input{width: 100%;box-sizing: border-box;outline: none;border: none;border: 1px solid #9db1bc;text-align: center;}

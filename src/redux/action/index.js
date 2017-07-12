@@ -10,6 +10,18 @@ export const ARTICLE_COMT = 'ARTICLE_COMT'
 export const POST_ARTICLE_REQUEST = 'POST_ARTICLE_REQUEST'
 export const POST_ARTICLE_SUCCESS = 'POST_ARTICLE_SUCCESS'
 export const POST_ARTICLE_FAILURE = 'POST_ARTICLE_FAILURE'
+export const GET_ARTICLE_REQUEST = 'GET_ARTICLE_REQUEST'
+export const GET_ARTICLE_SUCCESS = 'GET_ARTICLE_SUCCESS'
+export const GET_ARTICLE_FAILURE = 'GET_ARTICLE_FAILURE'
+export const SET_ARTICLE_TARGET = 'SET_ARTICLE_TARGET'
+
+export const GET_ARTICLES_REQUEST = 'GET_ARTICLES_REQUEST'
+export const GET_ARTICLES_SUCCESS = 'GET_ARTICLES_SUCCESS'
+export const GET_ARTICLES_FAILURE = 'GET_ARTICLES_FAILURE'
+
+export const GET_HOME_ARTICLES_REQUEST = 'GET_HOME_ARTICLES_REQUEST'
+export const GET_HOME_ARTICLES_SUCCESS = 'GET_HOME_ARTICLES_SUCCESS'
+export const GET_HOME_ARTICLES_FAILURE = 'GET_HOME_ARTICLES_FAILURE'
 
 export const setLoginUser = (user) => {
   return {
@@ -80,6 +92,68 @@ export const postArticleSuccess = (msg) => {
 export const postArticleFailure = (error) => {
   return{
     type: POST_ARTICLE_FAILURE,
+    error
+  }
+}
+export const getArticleRequest = (loading) => {
+  return {
+    type: GET_ARTICLE_REQUEST,
+    loading
+  }
+}
+export const getArticleSuccess = (json) => {
+  return {
+    type: GET_ARTICLE_SUCCESS,
+    json
+  }
+}
+export const getArticleFailure = (error) => {
+  return {
+    type: GET_ARTICLE_FAILURE,
+    error
+  }
+}
+export const setArticleTarget = (time) => {
+  return {
+    type: SET_ARTICLE_TARGET,
+    time
+  }
+}
+
+export const getArticlesRequest = (loading) => {
+  return {
+    type: GET_ARTICLE_REQUEST,
+    loading
+  }
+}
+export const getArticlesSuccess = (json) => {
+  return {
+    type: GET_ARTICLE_SUCCESS,
+    json
+  }
+}
+export const getArticlesFailure = (error) => {
+  return {
+    type: GET_ARTICLE_FAILURE,
+    error
+  }
+}
+
+export const getHomeArticlesRequest = (loading) => {
+  return {
+    type: GET_HOME_ARTICLES_REQUEST,
+    loading
+  }
+}
+export const getHomeArticlesSuccess = (json) => {
+  return {
+    type: GET_HOME_ARTICLES_SUCCESS,
+    json
+  }
+}
+export const getHomeArticlesFailure = (error) => {
+  return {
+    type: GET_HOME_ARTICLES_FAILURE,
     error
   }
 }

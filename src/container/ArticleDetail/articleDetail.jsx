@@ -1,30 +1,53 @@
 import React, { Component, PropTypes } from 'react'
 import GBheader from '../../component/header/GB-header.jsx'
+import {connect} from 'react-redux'
 import styles from './articleDetail.css'
 import cns from 'classnames/bind'
+import { setHeadactive } from '../../redux/action/index.js'
 let cx = cns.bind(styles)
 
-export default class GB_Article_detail extends Component{
+class GB_Article_detail extends Component{
   static defaultProps = {}
-  static propTypes = {}
+  static propTypes = {
+    headLst: PropTypes.array.isRequired,
+    headActive: PropTypes.number.isRequired,
+    setHeadIndex: PropTypes.func.isRequired,
+    getArticle: PropTypes.func,
+  }
   constructor(props) {
     super(props)
+    props.getHeadlist()
+    props.getArticle()
   }
+
+  componentDidUpdate() {
+    this.refs.comtWrap.innerHTML = this.props.comt
+  }
+  handLogin() {
+    this.props.history.push('/login')
+  }
+
+  handleClickHead(value, index) {
+    this.props.setHeadIndex(index)
+    if(0 !== index) {
+      this.props.history.push('/articleList')
+      this.props.getArticleList()
+    }
+    else {
+      this.props.history.push('/')
+    }
+  }
+
   render() {
+    const { headLst, headActive, setHeadIndex, title, comt } = this.props
     return (
       <div className={cx(styles.detailWrap)}>
-        <GBheader  propList={['主页', '生活记录', '工作记录', '心情随笔']} />
+        <GBheader btnClick={this.handLogin.bind(this)} active={null} propList={headLst} itemClick={(value, index) => this.handleClickHead.bind(this, value, index)()} />
         <div className={cx(styles.wrap)}>
           <div className={cx(styles.article)}>
-            <h1>标题大法师打发</h1>
-            <div className={cx(styles.articleComt)}>
-              a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生
-              a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生
-              a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生
-              a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生
-              a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生
-              a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生
-              a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生a把发的所发生的发生
+            <h1>{title}</h1>
+            <div className={cx(styles.articleComt)} ref="comtWrap">
+
             </div>
           </div>
         </div>
@@ -32,3 +55,22 @@ export default class GB_Article_detail extends Component{
     )
   }
 }
+
+
+const mapStateToProps = (state) => {
+  return {
+    headLst: state.headList,
+    headActive: state.headActive,
+    title: state.getArticle.json.title,
+    comt: state.getArticle.json.comt,
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getHeadlist: () => {dispatch({type: 'GET_HEADLIST_ASYNC'})},
+    setHeadIndex: (index) => {dispatch(setHeadactive(index))},
+    getArticle: () => {dispatch({type: 'GET_ARTICLE_ASYNC'})}
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GB_Article_detail)

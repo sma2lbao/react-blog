@@ -4,76 +4,96 @@ import styles from './articleList.css'
 import fa from 'font-awesome/css/font-awesome.css'
 import GBheader from '../../component/header/GB-header.jsx'
 import GBpaging from '../../component/paging/GB-paging.jsx'
+import {connect} from 'react-redux'
+import { setHeadactive, setArticleTarget } from '../../redux/action/index.js'
 let cx = cns.bind(styles)
 
-export default class ArticleList extends Component {
+class ArticleList extends Component {
   static defaultProps = {}
-  static propTypes = {}
+  static propTypes = {
+    headLst: PropTypes.array.isRequired,
+    headActive: PropTypes.number.isRequired,
+    setHeadIndex: PropTypes.func.isRequired,
+  }
   constructor(props) {
     super(props)
+    props.getHeadlist()
+    props.getArticleList()
+  }
+  handleClickTitle(time) {
+    // console.log(time);
+    this.props.setArticleTarget(time)
+    this.props.history.push('/articleDetail')
+  }
+  handleClickHead(value, index) {
+    this.props.setHeadIndex(index)
+    if(0 !== index) {
+      this.props.history.push('/articleList')
+      this.props.getArticleList()
+    }
+    else {
+      this.props.history.push('/')
+    }
+  }
+
+  handLogin() {
+    this.props.history.push('/login')
   }
   render() {
+    const { headLst, headActive, setHeadIndex, articles} = this.props
     return (
-      <div>
-        <GBheader propList={['主页', '生活记录', '工作记录', '心情随笔']} />
+      <div style={{ backgroundColor: '#f5f8fa', minHeight: '100%', paddingBottom: '20px', boxSizing: 'border-box' }}>
+        <GBheader btnClick={this.handLogin.bind(this)} active={headActive} propList={headLst} itemClick={(value, index) => this.handleClickHead.bind(this, value, index)()} />
         <div className={cx(styles.comtWrap)}>
           <div className={cx(styles.listWrap)}>
             <ul>
-              <li className={cx(styles.listItem)}>
-                <div className={cx(styles.itemLeft)}>
-                  <img src="" alt="" />
-                </div>
-                <div className={cx(styles.itemRight)}>
-                  <h4 className={cx(styles.itemTitle)}>送它上电影院，又得干死一堆烂片</h4>
-                  <div className={cx(styles.itemComt)}>
-                    有人说，中国也有了自己的B级片—— “网大”。 说到它，你肯定会用“低俗噱头”有人说，中国也有了自己的B级片—— “网大”。 说到它，你肯定会用“低俗噱头”和“粗制有人说，中国也有了自己的B级片—— “网大”。 说到它，你肯定会用“低俗噱头”和“粗制和“粗制滥造”来形容。 不过凡事总有例外，比如Sir刚看完的这部。 被毒饭安利的。 有血有肉、有.
-                  </div>
-                  <div className={cx(styles.itemTool)}>
-                    <span><i className={cx(fa['fa'], fa['fa-eye'])}></i> 333</span>
-                    <span><i className={cx(fa['fa'], fa['fa-comment'])}></i> 333</span>
-                    <span><i className={cx(fa['fa'], fa['fa-heart'])}></i> 333</span>
-                  </div>
-                </div>
-              </li>
-              <li className={cx(styles.listItem)}>
-                <div className={cx(styles.itemLeft)}>
-                  <img src="" alt="" />
-                </div>
-                <div className={cx(styles.itemRight)}>
-                  <h4 className={cx(styles.itemTitle)}>送它上电影院，又得干死一堆烂片</h4>
-                  <div className={cx(styles.itemComt)}>
-                    有人说，中国也有了自己的B级片—— “网大”。 说到它，你肯定会用“低俗噱头”有人说，中国也有了自己的B级片—— “网大”。 说到它，你肯定会用“低俗噱头”和“粗制有人说，中国也有了自己的B级片—— “网大”。 说到它，你肯定会用“低俗噱头”和“粗制和“粗制滥造”来形容。 不过凡事总有例外，比如Sir刚看完的这部。 被毒饭安利的。 有血有肉、有.
-                  </div>
-                  <div className={cx(styles.itemTool)}>
-                    <span><i className={cx(fa['fa'], fa['fa-eye'])}></i> 333</span>
-                    <span><i className={cx(fa['fa'], fa['fa-comment'])}></i> 333</span>
-                    <span><i className={cx(fa['fa'], fa['fa-heart'])}></i> 333</span>
-                  </div>
-                </div>
-              </li>
-              <li className={cx(styles.listItem)}>
-                <div className={cx(styles.itemLeft)}>
-                  <img src="" alt="" />
-                </div>
-                <div className={cx(styles.itemRight)}>
-                  <h4 className={cx(styles.itemTitle)}>送它上电影院，又得干死一堆烂片</h4>
-                  <div className={cx(styles.itemComt)}>
-                    有人说，中国也有了自己的B级片—— “网大”。 说到它，你肯定会用“低俗噱头”有人说，中国也有了自己的B级片—— “网大”。 说到它，你肯定会用“低俗噱头”和“粗制有人说，中国也有了自己的B级片—— “网大”。 说到它，你肯定会用“低俗噱头”和“粗制和“粗制滥造”来形容。 不过凡事总有例外，比如Sir刚看完的这部。 被毒饭安利的。 有血有肉、有.
-                  </div>
-                  <div className={cx(styles.itemTool)}>
-                    <span><i className={cx(fa['fa'], fa['fa-eye'])}></i> 333</span>
-                    <span><i className={cx(fa['fa'], fa['fa-comment'])}></i> 333</span>
-                    <span><i className={cx(fa['fa'], fa['fa-heart'])}></i> 333</span>
-                  </div>
-                </div>
-              </li>
+              {
+                articles.map((value, index) => {
+                  return(
+                    <li className={cx(styles.listItem)}>
+                      <div className={cx(styles.itemLeft)}>
+                        <img src="" alt="" />
+                      </div>
+                      <div className={cx(styles.itemRight)}>
+                        <h4 onClick={this.handleClickTitle.bind(this, value.time)} className={cx(styles.itemTitle)}>{value.title}</h4>
+                        <div className={cx(styles.itemComt)}>
+                          {value.comt.replace(/<[^>]+>/g,"")}
+                        </div>
+                        <div className={cx(styles.itemTool)}>
+                          <span><i className={cx(fa['fa'], fa['fa-eye'])}></i> 333</span>
+                          <span><i className={cx(fa['fa'], fa['fa-comment'])}></i> 333</span>
+                          <span><i className={cx(fa['fa'], fa['fa-heart'])}></i> 333</span>
+                        </div>
+                      </div>
+                    </li>
+                  )
+                })
+              }
             </ul>
-            <div style={{borderTop: '1px solid #ddd', padding: '20px 5px 50px 5px', textAlign: 'right'}}>
-              <GBpaging size={10} total={200} />
-            </div>
+            {/* <div style={{borderTop: '1px solid #ddd', padding: '20px 5px 50px 5px', textAlign: 'right'}}>
+              <GBpaging size={10} total={articles.length}  />
+            </div> */}
           </div>
         </div>
       </div>
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return{
+    headLst: state.headList,
+    headActive: state.headActive,
+    articles: state.getArticles.json
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getHeadlist: () => {dispatch({type: 'GET_HEADLIST_ASYNC'})},
+    setHeadIndex: (index) => {dispatch(setHeadactive(index))},
+    getArticleList: () => {dispatch({type: 'GET_ARTICLES_ASYNC'})},
+    setArticleTarget: (time) => {dispatch(setArticleTarget(time))}
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleList)

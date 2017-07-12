@@ -32,6 +32,14 @@ class Login extends Component {
     super(props)
   }
 
+  componentDidUpdate() {
+    if(this.props.isLogin){
+      setTimeout(() => {
+        this.props.history.push('/')
+      }, 2000)
+    }
+  }
+
   render() {
     const {user, pass, setLoginUser, setLoginPass, loginAsync, isLoading, msg, error} = this.props
     return(
@@ -72,6 +80,7 @@ const mapStateToProps = (state) => {
     isLoading: state.loginStatu.isLoading,
     msg: state.loginStatu.msg,
     error: state.loginStatu.error,
+    isLogin: state.loginStatu.isLogin,
   }
 }
 
