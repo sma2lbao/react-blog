@@ -6,6 +6,7 @@ import GBheader from '../../component/header/GB-header.jsx'
 import GBpaging from '../../component/paging/GB-paging.jsx'
 import {connect} from 'react-redux'
 import { setHeadactive, setArticleTarget } from '../../redux/action/index.js'
+import defImg from '../../images/def.jpg'
 let cx = cns.bind(styles)
 
 class ArticleList extends Component {
@@ -39,6 +40,10 @@ class ArticleList extends Component {
   handLogin() {
     this.props.history.push('/login')
   }
+
+  handleClickEdit() {
+    this.props.history.push('/writeArticle')
+  }
   render() {
     const { headLst, headActive, setHeadIndex, articles} = this.props
     return (
@@ -52,7 +57,7 @@ class ArticleList extends Component {
                   return(
                     <li className={cx(styles.listItem)}>
                       <div className={cx(styles.itemLeft)}>
-                        <img src="" alt="" />
+                        <img src={defImg} alt="" />
                       </div>
                       <div className={cx(styles.itemRight)}>
                         <h4 onClick={this.handleClickTitle.bind(this, value.time)} className={cx(styles.itemTitle)}>{value.title}</h4>
@@ -74,6 +79,10 @@ class ArticleList extends Component {
               <GBpaging size={10} total={articles.length}  />
             </div> */}
           </div>
+        </div>
+
+        <div className={cx(styles.editWrap)} onClick={this.handleClickEdit.bind(this)} >
+          <i style={{ verticalAlign: 'sub' }} className={cx(fa['fa'], fa['fa-pencil'],  fa['fa-2x'])}></i>
         </div>
       </div>
     )

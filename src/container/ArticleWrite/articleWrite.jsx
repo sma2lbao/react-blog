@@ -26,14 +26,27 @@ class Article_writer extends Component {
   handleClick() {
     this.props.writeArticle()
   }
+  handLogin() {
+    this.props.history.push('/login')
+  }
   clearInfo() {
     this.props.clearInfo()
+  }
+  handleClickHead(value, index) {
+    this.props.setHeadIndex(index)
+    if(0 !== index) {
+      this.props.history.push('/articleList')
+      this.props.getArticleList()
+    }
+    else {
+      this.props.history.push('/')
+    }
   }
   render() {
     const { headLst, headActive, setHeadIndex, setTitle, setComt, isLoading, msg, error} = this.props
     return (
       <div className={cx(styles.detailWrap)}>
-        <GBheader active={headActive} propList={headLst} itemClick={(value, index) => setHeadIndex(index)} />
+        <GBheader btnClick={this.handLogin.bind(this)} active={null} propList={headLst} itemClick={(value, index) => this.handleClickHead.bind(this, value, index)()} />
         <div className={cx(styles.wrap)}>
           <div className={cx(styles.article)}>
             <h1><input ref="title" type="text" placeholder="在这里输入标题..." onInput={(event) => setTitle(event.target.value)} /></h1>

@@ -23,6 +23,9 @@ class Home extends Component {
     this.state = {
 
     }
+    if(!window.applicationCache) {
+      this.props.history.push('/error')
+    }
     props.getHeadlist()
     props.getHomeArticles()
   }
@@ -36,7 +39,7 @@ class Home extends Component {
     }
   }
   handleClickTitle(time) {
-    console.log(time);
+    // console.log(time);
     this.props.history.push('/articleDetail')
   }
   handLogin() {
