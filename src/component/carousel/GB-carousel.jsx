@@ -72,14 +72,13 @@ export default class GB_carousel extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      disabled: false
-    })
     let carouselAuto = this.startInterval()
+    this.setState({interval: carouselAuto})
     this.refs.wrap.addEventListener('mouseover', () => {
       clearInterval(carouselAuto)
     })
     this.refs.wrap.addEventListener('mouseout', () => {
+      clearInterval(carouselAuto)
       carouselAuto = this.startInterval()
       this.setState({interval: carouselAuto})
     })

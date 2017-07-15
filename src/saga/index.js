@@ -112,7 +112,6 @@ export function* watchGetArticles() {
 }
 
 export function* getHomeArticlesAsync() {
-  console.log('join home async');
   try{
     yield put({type: GET_HOME_ARTICLES_REQUEST, loading: true})
     let response = yield call(axios, {method: 'GET', url: 'homeArticles'})

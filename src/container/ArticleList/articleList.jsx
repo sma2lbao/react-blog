@@ -52,7 +52,6 @@ class ArticleList extends Component {
   }
   render() {
     const { headLst, headActive, setHeadIndex, articles, isLogin} = this.props
-    console.log(articles);
     let btnText = "Login"
     if(isLogin) {
       btnText = "Logout"

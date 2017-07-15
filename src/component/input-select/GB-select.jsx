@@ -65,7 +65,6 @@ export default class GB_select extends Component {
   componentDidMount() {
       if(this.props.children) {
         this.refs.select.innerText = !this.props.children[0] ? this.props.children.props.text : this.props.children[0].props.text
-        console.log(this.refs.select.innerText)
         this.refs.select.innerText ? this.refs.select.innerText = this.refs.select.innerText : this.refs.select.innerText = ''
       }
       React.Children.map(this.props.children, (child) => {
