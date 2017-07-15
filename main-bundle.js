@@ -45976,7 +45976,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var _marked = [loginAsync, watchLoginAsync, getHeadlist, watchGetHeadList, postArticle, watchPostArticle, getArticleAsync, watchGetArticle, getArticlesAsync, watchGetArticles, getHomeArticlesAsync, watchGetHomeArticlesAsync, rootSaga].map(regeneratorRuntime.mark);
 
-_axios2.default.defaults.baseURL = 'http://119.23.50.36:443/api/blog/';
+_axios2.default.defaults.baseURL = 'http://119.23.50.36/api/blog/';
 
 function loginAsync() {
   var _ref, loginInfo, json;
