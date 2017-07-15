@@ -36639,7 +36639,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var AppRouter = function AppRouter() {
   return _react2.default.createElement(
-    _reactRouterDom.BrowserRouter,
+    _reactRouterDom.HashRouter,
     { forceRefresh: false },
     _react2.default.createElement(
       'div',
@@ -36653,7 +36653,7 @@ var AppRouter = function AppRouter() {
     )
   );
 };
-
+// import {BrowserRouter as Router, Route} from 'react-router-dom'
 exports.default = AppRouter;
 
 /***/ }),
