@@ -8,7 +8,7 @@ import styles from './login.css'
 import cns from 'classnames/bind'
 import fa from 'font-awesome/css/font-awesome.css'
 import {connect} from 'react-redux'
-import {setLoginUser, setLoginPass,} from '../../redux/action/index.js'
+import {setLoginUser, setLoginPass, setHeadactive} from '../../redux/action/index.js'
 
 let cx = cns.bind(styles)
 
@@ -35,6 +35,7 @@ class Login extends Component {
   componentDidUpdate() {
     if(this.props.isLogin){
       setTimeout(() => {
+        this.props.sethead(0)
         this.props.history.push('/')
       }, 2000)
     }
@@ -88,7 +89,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setLoginUser: (user) => dispatch(setLoginUser(user)),
     setLoginPass: (pass) => dispatch(setLoginPass(pass)),
-    loginAsync: (user, pass) => dispatch({type: 'LOGIN_ASYNC'})
+    loginAsync: (user, pass) => dispatch({type: 'LOGIN_ASYNC'}),
+    sethead: (index) => dispatch(setHeadactive(index))
   }
 }
 

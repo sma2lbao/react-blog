@@ -3,7 +3,7 @@ import GBheader from '../../component/header/GB-header.jsx'
 import {connect} from 'react-redux'
 import styles from './articleDetail.css'
 import cns from 'classnames/bind'
-import { setHeadactive } from '../../redux/action/index.js'
+import { setHeadactive, logout } from '../../redux/action/index.js'
 let cx = cns.bind(styles)
 
 class GB_Article_detail extends Component{
@@ -24,7 +24,13 @@ class GB_Article_detail extends Component{
     this.refs.comtWrap.innerHTML = this.props.comt
   }
   handLogin() {
-    this.props.history.push('/login')
+    if(!this.props.isLogin){
+      this.props.history.push('/login')
+    }
+    else{
+      this.props.logout()
+      alert('操作成功')
+    }
   }
 
   handleClickHead(value, index) {
@@ -39,10 +45,14 @@ class GB_Article_detail extends Component{
   }
 
   render() {
-    const { headLst, headActive, setHeadIndex, title, comt } = this.props
+    const { headLst, headActive, setHeadIndex, title, comt, isLogin} = this.props
+    let btnText = "Login"
+    if(isLogin) {
+      btnText = "Logout"
+    }
     return (
       <div className={cx(styles.detailWrap)}>
-        <GBheader btnClick={this.handLogin.bind(this)} active={null} propList={headLst} itemClick={(value, index) => this.handleClickHead.bind(this, value, index)()} />
+        <GBheader btnText={btnText} btnClick={this.handLogin.bind(this)} active={null} propList={headLst} itemClick={(value, index) => this.handleClickHead.bind(this, value, index)()} />
         <div className={cx(styles.wrap)}>
           <div className={cx(styles.article)}>
             <h1>{title}</h1>
@@ -63,13 +73,15 @@ const mapStateToProps = (state) => {
     headActive: state.headActive,
     title: state.getArticle.json.title,
     comt: state.getArticle.json.comt,
+    isLogin: state.loginStatu.isLogin,
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
     getHeadlist: () => {dispatch({type: 'GET_HEADLIST_ASYNC'})},
     setHeadIndex: (index) => {dispatch(setHeadactive(index))},
-    getArticle: () => {dispatch({type: 'GET_ARTICLE_ASYNC'})}
+    getArticle: () => {dispatch({type: 'GET_ARTICLE_ASYNC'})},
+    logout: () => {dispatch(logout())}
   }
 }
 

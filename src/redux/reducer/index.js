@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
 import {LOGIN_USER, LOGIN_PASS,
-  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
+  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,LOG_OUT,
   HEAD_LIST, HEAD_ACTIVE,
   ARTICLE_TITLE, ARTICLE_COMT,
   POST_ARTICLE_REQUEST, POST_ARTICLE_SUCCESS, POST_ARTICLE_FAILURE,
@@ -29,6 +29,8 @@ const loginStatu = (state = {isLoading: false, msg: '', error: '', isLogin: fals
       return Object.assign({}, state, {msg: action.text, isLogin: true})
     case LOGIN_FAILURE:
       return Object.assign({}, state, {error: action.error})
+    case LOG_OUT:
+      return Object.assign({}, state, {isLogin: false})
     default:
       return state
   }

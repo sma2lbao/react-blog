@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+// import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {HashRouter as Router, Route} from 'react-router-dom'
 import Login from '../container/Login/login.jsx'
 import Home from '../container/Home/home.jsx'
 import ArticleDetail from '../container/ArticleDetail/articleDetail.jsx'

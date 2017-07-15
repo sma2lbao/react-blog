@@ -5,7 +5,7 @@ import fa from 'font-awesome/css/font-awesome.css'
 import { connect } from 'react-redux'
 import GBheader from '../../component/header/GB-header.jsx'
 import GBcarousel from '../../component/carousel/GB-carousel.jsx'
-import { setHeadactive } from '../../redux/action/index.js'
+import { setHeadactive, logout} from '../../redux/action/index.js'
 import defImg from '../../images/def.jpg'
 
 let cx = cns.bind(styles)
@@ -43,21 +43,48 @@ class Home extends Component {
     this.props.history.push('/articleDetail')
   }
   handLogin() {
-    this.props.history.push('/login')
+    if(!this.props.isLogin){
+      this.props.history.push('/login')
+    }
+    else{
+      this.props.logout()
+      alert('操作成功')
+    }
   }
+
+  handleClickPic(value, index) {
+    switch (index) {
+      case 1:
+        window.open('https://sma2lbao.github.io/ForLife/')
+        break;
+      case 2:
+        window.open('https://sma2lbao.github.io/')
+        break;
+      case 0:
+        window.open('https://sma2lbao.github.io/react-ui/')
+        break;
+      default:
+        window.open('https://sma2lbao.github.io/')
+    }
+  }
+
   render() {
-    const { headLst, headActive, setHeadIndex, json, error, isLoading} = this.props
+    const { headLst, headActive, setHeadIndex, json, error, isLoading, isLogin} = this.props
+    let btnText = "Login"
+    if(isLogin) {
+      btnText = "Logout"
+    }
     return (
       <div style={{ backgroundColor: '#f5f8fa', minHeight: '100%', paddingBottom: '20px', boxSizing: 'border-box' }}>
-        <GBheader btnClick={this.handLogin.bind(this)} active={headActive} propList={headLst} itemClick={(value, index) => this.handleClickHead.bind(this, value, index)()} />
-        <GBcarousel />
+        <GBheader btnText={btnText} btnClick={this.handLogin.bind(this)} active={headActive} propList={headLst} itemClick={(value, index) => this.handleClickHead.bind(this, value, index)()} />
+        <GBcarousel onClick={(value, index) => this.handleClickPic.bind(this, value, index)()} imgs={['https://sma2lbao.github.io/resource/images/react-ui.jpg', 'https://sma2lbao.github.io/resource/images/forlife.jpg', 'https://sma2lbao.github.io/resource/images/home.jpg']} />
         <div className={cx(styles.comtWrap)}>
           <div className={cx(styles.listWrap)}>
             <ul>
               {
                 json.map((value, index) => {
                   return(
-                    <li className={cx(styles.listItem)}>
+                    <li key={index} className={cx(styles.listItem)}>
                       <div className={cx(styles.itemLeft)}>
                         <img src={defImg} alt="" />
                       </div>
@@ -91,13 +118,15 @@ const mapStateToProps = (state) => {
     error: state.getHomeArticles.error,
     json: state.getHomeArticles.json,
     isLoading: state.getHomeArticles.isLoading,
+    isLogin: state.loginStatu.isLogin,
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
     getHeadlist: () => {dispatch({type: 'GET_HEADLIST_ASYNC'})},
     setHeadIndex: (index) => {dispatch(setHeadactive(index))},
-    getHomeArticles: () => {dispatch({type: 'GET_HOME_ARTICLES_ASYNC'})}
+    getHomeArticles: () => {dispatch({type: 'GET_HOME_ARTICLES_ASYNC'})},
+    logout: () => {dispatch(logout())}
   }
 }
 

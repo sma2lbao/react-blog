@@ -7,7 +7,7 @@ import GBbutton from '../../component/button/GB-button.jsx'
 import GBrefresh from '../../component/refresh/GB-refresh.jsx'
 import GBpop from '../../component/pop/GB-pop.jsx'
 import {connect} from 'react-redux'
-import { setHeadactive, setArticleTitle, setArticleComt, postArticleSuccess, postArticleFailure } from '../../redux/action/index.js'
+import { logout, setHeadactive, setArticleTitle, setArticleComt, postArticleSuccess, postArticleFailure } from '../../redux/action/index.js'
 
 let cx = cns.bind(styles)
 
@@ -27,7 +27,14 @@ class Article_writer extends Component {
     this.props.writeArticle()
   }
   handLogin() {
-    this.props.history.push('/login')
+    if(!this.props.isLogin){
+      this.props.history.push('/login')
+    }
+    else{
+      this.props.logout()
+      alert('操作成功')
+      this.props.history.push('/home')
+    }
   }
   clearInfo() {
     this.props.clearInfo()
@@ -43,10 +50,14 @@ class Article_writer extends Component {
     }
   }
   render() {
-    const { headLst, headActive, setHeadIndex, setTitle, setComt, isLoading, msg, error} = this.props
+    const { headLst, headActive, setHeadIndex, setTitle, setComt, isLoading, msg, error, isLogin} = this.props
+    let btnText = "Login"
+    if(isLogin) {
+      btnText = "Logout"
+    }
     return (
       <div className={cx(styles.detailWrap)}>
-        <GBheader btnClick={this.handLogin.bind(this)} active={null} propList={headLst} itemClick={(value, index) => this.handleClickHead.bind(this, value, index)()} />
+        <GBheader btnText={btnText} btnClick={this.handLogin.bind(this)} active={null} propList={headLst} itemClick={(value, index) => this.handleClickHead.bind(this, value, index)()} />
         <div className={cx(styles.wrap)}>
           <div className={cx(styles.article)}>
             <h1><input ref="title" type="text" placeholder="在这里输入标题..." onInput={(event) => setTitle(event.target.value)} /></h1>
@@ -89,6 +100,7 @@ const mapStateToProps = (state) => {
     isLoading: state.postArticle.isLoading,
     msg: state.postArticle.msg,
     error: state.postArticle.error,
+    isLogin: state.loginStatu.isLogin,
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -101,7 +113,8 @@ const mapDispatchToProps = (dispatch) => {
     clearInfo: () => {
       dispatch(postArticleSuccess(''))
       dispatch(postArticleFailure(''))
-    }
+    },
+    logout: () => dispatch(logout())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Article_writer)

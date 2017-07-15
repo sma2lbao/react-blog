@@ -10,9 +10,10 @@ export default class GB_header extends Component {
   }
   static propTypes = {
     btnClick: PropTypes.func,
+    btnText: PropTypes.string,
     propList: PropTypes.array,
     active: PropTypes.number,
-    itemClick: PropTypes.func
+    itemClick: PropTypes.func,
   }
   constructor(props) {
     super(props)
@@ -31,7 +32,7 @@ export default class GB_header extends Component {
     }
   }
   render() {
-    const { propList, active} = this.props
+    const { propList, active, btnText} = this.props
     return (
       <div className={cx(styles.headerWrap)}>
         <div className={cx(styles.headerComt)}>
@@ -51,7 +52,7 @@ export default class GB_header extends Component {
             </ul>
           </span>
           <span className={cx(styles.operating)}>
-            <button onClick={this.btnClick.bind(this)}>登录</button>
+            <button onClick={this.btnClick.bind(this)}>{btnText}</button>
           </span>
         </div>
       </div>

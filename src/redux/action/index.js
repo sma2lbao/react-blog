@@ -3,6 +3,7 @@ export const LOGIN_PASS = 'LOGIN_PASS'
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+export const LOG_OUT = 'LOG_OUT'
 export const HEAD_LIST = 'HEAD_LIST'
 export const HEAD_ACTIVE = 'HEAD_ACTIVE'
 export const ARTICLE_TITLE = 'ARTICLE_TITLE'
@@ -22,6 +23,7 @@ export const GET_ARTICLES_FAILURE = 'GET_ARTICLES_FAILURE'
 export const GET_HOME_ARTICLES_REQUEST = 'GET_HOME_ARTICLES_REQUEST'
 export const GET_HOME_ARTICLES_SUCCESS = 'GET_HOME_ARTICLES_SUCCESS'
 export const GET_HOME_ARTICLES_FAILURE = 'GET_HOME_ARTICLES_FAILURE'
+
 
 export const setLoginUser = (user) => {
   return {
@@ -51,6 +53,11 @@ export const loginFailure = (error) => {
   return {
     type: LOGIN_FAILURE,
     error
+  }
+}
+export const logout = () => {
+  return {
+    type: LOG_OUT
   }
 }
 export const getHeadlist = (list) => {

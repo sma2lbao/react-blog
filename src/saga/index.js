@@ -8,7 +8,7 @@ import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
   GET_HOME_ARTICLES_REQUEST, GET_HOME_ARTICLES_SUCCESS, GET_HOME_ARTICLES_FAILURE,
 } from '../redux/action/index.js'
 import axios from 'axios'
-axios.defaults.baseURL = 'http://119.23.50.36:443/api/blog/';
+axios.defaults.baseURL = 'http://119.23.50.36:3000/api/blog/';
 
 export function* loginAsync () {
   yield put({type: LOGIN_REQUEST, loading: true})

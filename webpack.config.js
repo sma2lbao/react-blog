@@ -11,7 +11,7 @@ const config = {
   output: {
     filename: '[name]-bundle.js',
     path: path.join(__dirname, '/dist'),
-    publicPath: '/'
+    publicPath: '/react-blog/'
   },
 
   module: {
@@ -70,7 +70,7 @@ const config = {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
-    port: 3000,
+    port: 2000,
     hot: true
   }
 }
