@@ -55,7 +55,7 @@ class Home extends Component {
   handleClickPic(value, index) {
     switch (index) {
       case 1:
-        window.open('https://sma2lbao.github.io/ForLife/')
+        window.open('https://119.23.50.36/ForLife/')
         break;
       case 2:
         window.open('https://sma2lbao.github.io/')
